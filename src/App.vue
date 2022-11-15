@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <transition>
+    <transition name="para">
       <p v-if="paraIsVisible">This is only visible</p>
     </transition>
     <button @click="togglePara">Toggle Para</button>
@@ -8,16 +8,20 @@
     <div class="block"></div>
     <button>Animate</button>
   </div>
-  <base-modal @close="hideDialog" v-if="dialogIsVisible">
+
+  <BaseModal :open="dialogIsVisible" @close="hideDialog">
     <p>This is a test dialog!</p>
     <button @click="hideDialog">Close it!</button>
-  </base-modal>
+  </BaseModal>
+
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
   </div>
 </template>
 
 <script>
+import BaseModal from "./components/BaseModal.vue";
+
 export default {
   data() {
     return {
@@ -36,32 +40,43 @@ export default {
       this.paraIsVisible = !this.paraIsVisible;
     },
   },
+  components: { BaseModal },
 };
 </script>
 
 <style>
-.v-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
+.para-enter-from {
+  /* opacity: 0;
+  transform: translateY(-30px); */
 }
-.v-enter-active {
-  transition: all 0.3s;
+.para-enter-active {
+  /* transition: all 0.3s; */
+  animation: test 0.3s ease;
 }
-.v-enter-to {
-  opacity: 1;
-  transform: translateY(0);
+.para-enter-to {
+  /* opacity: 1;
+  transform: translateY(0); */
 }
 
-.v-leave-from {
+.para-leave-from {
   opacity: 1;
   transform: translateY(0);
 }
-.v-leave-active {
+.para-leave-active {
   transition: all 0.3s;
 }
-.v-leave-to {
+.para-leave-to {
   opacity: 0;
   transform: translateY(-30px);
+}
+
+@keyframes test {
+  0% {
+    transform: translateX(-50px);
+  }
+  100% {
+    transform: translateX(100px);
+  }
 }
 
 * {
